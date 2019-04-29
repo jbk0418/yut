@@ -1,13 +1,14 @@
+//githubë¡œ ì£¼ì„ì‘ì„± 4/29
 #include <stdio.h>
 #include<conio.h>
 #include<windows.h>
 #define X_MAX 20
-#define Y_MAX 10// 4/8 ¸»À» ¼±ÅÃÇØ¼­ ¾îµğ·Î °¥Áö ¼±ÅÃÇÒ¼ö ÀÖ¾î¾ßÇÔ
+#define Y_MAX 10// 4/8 ë§ì„ ì„ íƒí•´ì„œ ì–´ë””ë¡œ ê°ˆì§€ ì„ íƒí• ìˆ˜ ìˆì–´ì•¼í•¨
 #define MAX_PS 4
 
 typedef struct pieces {
-	int x=X_MAX-2 ,y=Y_MAX;//ÁÂÇ¥
-	int carry;//¾÷Àº ¸»°¹¼ö
+	int x=X_MAX-2 ,y=Y_MAX;//ì¢Œí‘œ
+	int carry;//ì—…ì€ ë§ê°¯ìˆ˜
 
 }pic;
 typedef struct TEAM {
@@ -23,7 +24,7 @@ int main()
 {
 	team t;
 	char key;
-	int d = 0;//¸îÄ­ °¥Áö
+	int d = 0;//ëª‡ì¹¸ ê°ˆì§€
 	int x = X_MAX, y = Y_MAX;
 	do {
 		gotoxy(t.p->x+2,t.p->y);
@@ -34,14 +35,14 @@ int main()
 			t.p->x = x;
 			t.p->y = y;
 			gotoxy(x - 2, y);
-			printf("¡Ü");//ÀÌÀü¿¡ Ãâ·ÂÇÑ ¸»Àº ¸ÊÀÌ Ãâ·Â µÇ¸é ¼­ Áö¿öÁöµµ·Ï ÇÑ´Ù
-			printf("¸îÄ­ ¿òÁ÷ÀÌ´ÂÁö ÀÔ·Â:");
+			printf("â—");//ì´ì „ì— ì¶œë ¥í•œ ë§ì€ ë§µì´ ì¶œë ¥ ë˜ë©´ ì„œ ì§€ì›Œì§€ë„ë¡ í•œë‹¤
+			printf("ëª‡ì¹¸ ì›€ì§ì´ëŠ”ì§€ ì…ë ¥:");
 		scanf("%d", &d);
 			continue;
 		}
 		printf("\b \b ");
 		move_cursor(key, &t,d);
-	} while (key != 27);//esc´©¸£¸é Á¾·á
+	} while (key != 27);//escëˆ„ë¥´ë©´ ì¢…ë£Œ
 }
 void gotoxy(int x, int y)
 {
@@ -52,18 +53,18 @@ void move_cursor(char key, team *s,int d)
 {
 	switch (key)
 	{
-	/*case 72://»ó
+	/*case 72://ìƒ
 		*y1 = *y1 - 2;
 		if (*y1 < 1)
 			*y1 = 1;
 		break;*/
-	case 75://ÁÂ
+	case 75://ì¢Œ
 		s->p->y += d ;
 		break;
-	case 77://¿ì
+	case 77://ìš°
 		s->p->y -= d ;
 		break;
-	/*case 80://ÇÏ
+	/*case 80://í•˜
 		*y1 = *y1 + 2;
 		if (*y1 > Y_MAX)
 			*y1 = Y_MAX;
