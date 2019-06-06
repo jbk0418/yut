@@ -6,13 +6,13 @@
 
 r = -1; //잡을지 말지 결정하는 결과를 저장하는 전역변수 초기화 헤더에 extern으로 선언함
 
-/*color_select를 헤더 파일에 추가하고
-  intro를 삭제한다.*/
+		/*color_select를 헤더 파일에 추가하고
+		intro를 삭제한다.*/
 void color_select(mal **t) {
 	char key = NULL;
 	int x = 32;
 	int i = 0;
-	int color=0;
+	int color = 0;
 	gotoxy(30, 20);
 	for (int i = 10; i <= 15; i++) {
 		setcolor(0, i);
@@ -20,15 +20,15 @@ void color_select(mal **t) {
 		unsetcolor();
 		printf(" ");
 	}
-	
-	while (i!=2) {
 
-	gotoxy(30, 10);
-	printf("%d 팀 컬러를 선택해 주세요",i+1);
+	while (i != 2) {
+
+		gotoxy(30, 10);
+		printf("%d 팀 컬러를 선택해 주세요", i + 1);
 
 		gotoxy(x, 22);
 		printf("△");
-		
+
 		key = getch();
 
 		color = (x - 32) / 7 + 10;
@@ -37,7 +37,7 @@ void color_select(mal **t) {
 			gotoxy(x, 22);
 			printf("  ");
 			x += 7;
-			
+
 			if (x == 74) x = 32;
 		}
 		else if (key == 75 || key == 80) {		//왼쪽 혹은 아래(왼쪽으로 이동
@@ -47,7 +47,7 @@ void color_select(mal **t) {
 			if (x == 25) x = 67;
 		}
 		else if (key == 32 || key == 13) {		//엔터 혹은 스페이스(결정)
-			if (color  == t[!i][0].Teamcolor) {
+			if (color == t[!i][0].Teamcolor) {
 				gotoxy(35, 32);
 				printf("같은색은 선택 할 수 없습니다..\n\n");
 			}
@@ -60,7 +60,7 @@ void color_select(mal **t) {
 				printf("%d팀", i + 1);
 				x = 32;
 				i++;
-			
+
 			}
 		}
 	}
@@ -70,14 +70,15 @@ void color_select(mal **t) {
 /*글자색    배경색   ->겹치는 색깔 고르지 못하게 해야됨*/
 void color_menu(mal ** c) {
 
-			color_select(c);
-		
-		/*같은 팀은 같은색깔로*/
-		for (int i = 0; i < 2; i++) {
-			for (int n = 0; n < 3; n++)
-				c[i][n].Teamcolor = c[i][0].Teamcolor;
-		}
-	
+	color_select(c);
+
+	/*같은 팀은 같은색깔로*/
+	for (int i = 0; i < 2; i++) {
+		for (int n = 0; n < 3; n++)
+			c[i][n].Teamcolor = c[i][0].Teamcolor;
+	}
+
+	Sleep(150);
 	/*안내가 끝나면 지움*/
 	system("cls");
 }
@@ -108,7 +109,7 @@ char cmp_cat_carry(mal **t, int x, int y, int index, int teamnum) {
 		/*잡을 수 있으면 X로 표시 */
 
 		/*팀원의 좌표가 같고 같은 인덱스가 아닐때 -> 업는경우*/
-		else if (x == t[teamnum][n].x&&y == t[teamnum][n].y&&index != n&&t[teamnum][n].where !=22&&t[teamnum][n].where!=0)	//골인지점이면 업지 않는다.
+		else if (x == t[teamnum][n].x&&y == t[teamnum][n].y&&index != n && t[teamnum][n].where != 22 && t[teamnum][n].where != 0)	//골인지점이면 업지 않는다.
 		{
 			/*goto로 해당 좌표로 이동*/
 			gotoxy(x, y);
@@ -118,7 +119,7 @@ char cmp_cat_carry(mal **t, int x, int y, int index, int teamnum) {
 				d = 3;
 			if ((t[teamnum][index].Howmany == -1 || t[teamnum][index].Howmany == 0) && t[teamnum][n].Howmany == 0)
 				d = 2;
-		
+
 			setcolor(t[teamnum][index].Teamcolor, 0);
 
 			printf("%d!", d);
@@ -129,7 +130,7 @@ char cmp_cat_carry(mal **t, int x, int y, int index, int teamnum) {
 		}
 
 		/*다른팀의 좌표가 같을때 -> 잡는경우&&t[teamnum][n].cango[9] != 0*/
-		else if (x == t[!teamnum][n].x&&y == t[!teamnum][n].y&&t[!teamnum][n].where!=22&&t[!teamnum][n].where != 0) {
+		else if (x == t[!teamnum][n].x&&y == t[!teamnum][n].y&&t[!teamnum][n].where != 22 && t[!teamnum][n].where != 0) {
 			/*goto로 해당 좌표 이동*/
 			gotoxy(x, y);
 			/*X로 표기 잡는팀색 표기*/
@@ -143,10 +144,11 @@ char cmp_cat_carry(mal **t, int x, int y, int index, int teamnum) {
 
 
 	/*키입력 처리*/
- 		key = getch();		//잡거나 업을지 결정함 결정시 스페이스 입력.
+
+	key = getch();		//잡거나 업을지 결정함 결정시 스페이스 입력.
 
 						/*잡거나 업지 않고 끝났을때 다시 원래의 문자를 출력해준다.*/
- 	if (key != 32) {
+	if (key != 32) {
 
 
 		if (r == 1 || r == 0) {		//잡거나 업을 수 있던경우에 다르게 출력했기에 원래있던 말을 출력해줌
@@ -189,7 +191,6 @@ void carry(mal *t, int index) {
 
 			/*좌표가 같고                     번호가 다른경우*/
 			else if (t[index].x == t[n].x&&t[index].y == t[n].y&&index != n) {
-			
 
 				/*몇개 같이있는지 if문으로 구분해서 저장함 말이 3개 뿐이니 하나가 2이상이면 3이다.*/
 				if (t[index].Howmany == -1 || t[index].Howmany == 0 || t[n].Howmany == 0)
@@ -204,14 +205,25 @@ void carry(mal *t, int index) {
 							t[k].Howmany = d;
 					}
 				}
+				if (t[n].Howmany > 0) {
+					for (int k = 0; k < 3; k++) {
+						if (t[k].Howmany == t[n].Howmany)
+							t[k].Howmany = d;
+					}
+				}
+
 				t[index].Howmany = d;
 				t[n].Howmany = d;
-				
+
+				if (d == 3) {
+					for (int count = 0; count < 3; count++)
+						printf("%d", t[count].Howmany);
+				}
+
 				/*위치 초기화*/
-				t[n].x = 64;
+				t[n].x = 65;
 				t[n].y = 35;
 				t[n].where = 0;
-			
 				/*cango 초기화*/
 				for (l = 0; l < 10; l++)
 					t[n].cango[l] = 0;
@@ -238,35 +250,32 @@ void cat(mal **t, int index, int teamnum) {
 	/*초기화된 말은 못잡도록 바꿀것*/
 
 	int n, l;
-	
+
 	if (r == 1) {		//결과가 잡는 경우일 경우
 
 		for (n = 0; n<3; n++) {
 			/*상대팀과 좌표가 같은 경우*/
-			if (t[!teamnum][n].where == 22){
-			
+			if (t[!teamnum][n].where == 22) {
+
 			}
 
 			else if (t[teamnum][index].x == t[!teamnum][n].x&&t[teamnum][index].y == t[!teamnum][n].y) {
-				 
+
 				/*업은말 초기화*/
-				if (t[!teamnum][n].Howmany != 0)
+				if(t[!teamnum][n].Howmany!=0)
 				for (l = 0; l < 3; l++) {
-					if (t[!teamnum][n].Howmany == t[!teamnum][l].Howmany && n != l) {
-						t[!teamnum][l].x = 64;
-						t[!teamnum][l].y = 35;
+					if (t[!teamnum][n].Howmany == t[!teamnum][l].Howmany && n != l)
 						t[!teamnum][l].Howmany = -1;
-						t[!teamnum][l].where = 0;
-					}
+					t[!teamnum][l].where = 0;
 				}
-		
+
 				/*잡힌말 초기화*/
-				t[!teamnum][n].x = 64;
+				t[!teamnum][n].x = 65;
 				t[!teamnum][n].y = 35;
 
 				t[!teamnum][n].where = 0;
 				t[!teamnum][n].Howmany = -1;
-				
+
 
 				/*cango 초기화*/
 				for (l = 0; l < 10; l++)
@@ -294,8 +303,8 @@ void cat(mal **t, int index, int teamnum) {
 void team_mal(mal **t) {
 	int index = 0;
 	int x1, x2, y1, y2;
- 	x1 = 82;
-	x2 = 82;
+	x1 = 83;
+	x2 = 83;
 	y1 = 36;
 	y2 = 38;
 
@@ -303,10 +312,10 @@ void team_mal(mal **t) {
 
 		/*1번팀 gotoxy를 사용해 x79 y36*/
 		gotoxy(x1, y1);
-		printf("         ");				//이전값 삭제
+		printf("          ");				//이전값 삭제
 		gotoxy(x1, y1);
 		/*위치가 초기이고 업혀있지 않다면 출력함*/
-		if (t[0][index].x == 64 && t[0][index].y == 35 && t[0][index].Howmany == -1&&t[0][index].where ==0) {
+		if (t[0][index].x == 65 && t[0][index].y == 35 && t[0][index].Howmany == -1) {
 			setcolor(t[0][index].Teamcolor, 0);
 			printf("●");/*이부분 바꿀것*/
 			unsetcolor();
@@ -317,9 +326,9 @@ void team_mal(mal **t) {
 
 		/*2번팀 gotoxy를 사용해 x79 y38*/
 		gotoxy(x2, y2);
-		printf("         ");				//이전값 삭제
+		printf("          ");				//이전값 삭제
 		gotoxy(x2, y2);
-		if (t[1][index].x == 64 && t[1][index].y == 35 && t[1][index].Howmany == -1 && t[1][index].where == 0) {
+		if (t[1][index].x == 65 && t[1][index].y == 35 && t[1][index].Howmany == -1) {
 
 			/*색 함수*/
 			setcolor(t[1][index].Teamcolor, 0);
@@ -340,7 +349,7 @@ int visiable(mal *t, int index) {
 		return 0;
 	if (t[index].where == 20)
 		return 1;
-	if ((t[index].where ==0)||(t[index].x ==51 &&t[index].y ==20)/*53 20이부분에 골인지점*/)
+	if ((t[index].where == 0) || (t[index].x == 51 && t[index].y == 20)/*53 20이부분에 골인지점*/)
 		return 0;
 	return 1;
 }
@@ -353,7 +362,7 @@ void print_mal(mal t) {
 	/*업은 말의 수에 따라 다르게 출력한다.*/
 	if (t.Howmany >= 1) {
 		if (t.Teamcolor != 15) {
-			setcolor(7, t.Teamcolor);
+			setcolor(0, t.Teamcolor);
 			printf(" %d", t.Howmany);
 			unsetcolor();
 		}
@@ -382,7 +391,7 @@ void print_all_mal(mal**t) {
 		/*1번팀 말 출력*/
 
 		if (visiable(t[0], i)) {
-
+			//printf("%d %d", t[0][i].x, t[0][i].y);
 			print_mal(t[0][i]);
 		}
 
@@ -403,21 +412,21 @@ void print_score(mal**t) {
 	int y1 = 31;
 	int x2 = 83;
 	int y2 = 33;
-	
-		for (int k = 0; k < 3; k++) {
-			if (t[0][k].where == 22) {
-				gotoxy(x1,y1);
-				setcolor(t[0][k].Teamcolor, 0);
-				printf("●");
-				unsetcolor();
-				x1 += 2;
-			}
-			if (t[1][k].where == 22) {
-				gotoxy(x2, y2);
-				setcolor(t[1][k].Teamcolor, 0);
-				printf("●");
-				unsetcolor();
-				x2 += 2;
-			}
+
+	for (int k = 0; k < 3; k++) {
+		if (t[0][k].where == 22) {
+			gotoxy(x1, y1);
+			setcolor(t[0][k].Teamcolor, 0);
+			printf("●");
+			unsetcolor();
+			x1 += 2;
 		}
+		if (t[1][k].where == 22) {
+			gotoxy(x2, y2);
+			setcolor(t[1][k].Teamcolor, 0);
+			printf("●");
+			unsetcolor();
+			x2 += 2;
+		}
+	}
 }
