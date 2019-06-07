@@ -199,12 +199,7 @@ void carry(mal *t, int index) {
 					d = 2;
 
 				/*엎혀있던 말들도 값을 넣어줌*/
-				if (t[index].Howmany > 0) {
-					for (int k = 0; k < 3; k++) {
-						if (t[k].Howmany == t[index].Howmany)
-							t[k].Howmany = d;
-					}
-				}
+				
 				if (t[n].Howmany > 0) {
 					for (int k = 0; k < 3; k++) {
 						if (t[k].Howmany == t[n].Howmany)
@@ -264,9 +259,10 @@ void cat(mal **t, int index, int teamnum) {
 				/*업은말 초기화*/
 				if(t[!teamnum][n].Howmany!=0)
 				for (l = 0; l < 3; l++) {
-					if (t[!teamnum][n].Howmany == t[!teamnum][l].Howmany && n != l)
+					if (t[!teamnum][n].Howmany == t[!teamnum][l].Howmany && n != l) {
 						t[!teamnum][l].Howmany = -1;
-					t[!teamnum][l].where = 0;
+						t[!teamnum][l].where = 0;
+					}
 				}
 
 				/*잡힌말 초기화*/
@@ -312,7 +308,7 @@ void team_mal(mal **t) {
 
 		/*1번팀 gotoxy를 사용해 x79 y36*/
 		gotoxy(x1, y1);
-		printf("          ");				//이전값 삭제
+		printf("     ");				//이전값 삭제
 		gotoxy(x1, y1);
 		/*위치가 초기이고 업혀있지 않다면 출력함*/
 		if (t[0][index].x == 65 && t[0][index].y == 35 && t[0][index].Howmany == -1) {
@@ -326,7 +322,7 @@ void team_mal(mal **t) {
 
 		/*2번팀 gotoxy를 사용해 x79 y38*/
 		gotoxy(x2, y2);
-		printf("          ");				//이전값 삭제
+		printf("     ");				//이전값 삭제
 		gotoxy(x2, y2);
 		if (t[1][index].x == 65 && t[1][index].y == 35 && t[1][index].Howmany == -1) {
 
@@ -340,7 +336,13 @@ void team_mal(mal **t) {
 
 
 		}
-	}
+		}
+/*점수판 오른쪽칸을 제거하는 문제 해결*/
+	gotoxy(89 , 36);
+	printf("│");
+	gotoxy(89, 38);
+	printf("│");
+
 }
 
 /*말을 위치를 확인해서 말판위에 나타낼지 말지 결정함*/
@@ -385,23 +387,25 @@ void print_mal(mal t) {
 /*현재 말판위에 있는 말들을 출력함*/
 void print_all_mal(mal**t) {
 	int i;
-
+	int c1 = 0, c2 = 0;
 	for (i = 0; i < 3; i++) {
 
 		/*1번팀 말 출력*/
 
 		if (visiable(t[0], i)) {
-			//printf("%d %d", t[0][i].x, t[0][i].y);
+			c1++;
 			print_mal(t[0][i]);
 		}
 
 		/*2번팀 말출력*/
 		if (visiable(t[1], i)) {
-
+			c2++;
 			print_mal(t[1][i]);
 		}
 
 	}
+
+
 	print_score(t);
 	//team_mal(t);
 
